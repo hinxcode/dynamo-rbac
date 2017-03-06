@@ -37,7 +37,7 @@ function convertToInstance (rbac, record) {
   throw new Error('Type is undefined')
 }
 
-export default class Dynamo extends Storage {
+export default class DynamoDB extends Storage {
   constructor (options = {}) {
     super()
 
@@ -104,11 +104,69 @@ export default class Dynamo extends Storage {
 
   }
 
-  getPermissions (cb) {
+  getPermission (action, resource, cb) {
+    const name = Permission.createName(action, resource)
 
+    this.get(name, (err, item) => {
+      if (err || !item) {
+        return cb(err, item)
+      }
+
+      if (item instanceof Permission) {
+        return cb(null, item)
+      }
+
+      cb(null, null)
+    })
+
+    return this
   }
 
-  getGrants (role, cb) {
+  exists (name, cb) {
+    this.get(name, (err, item) => {
+      if (err) {
+        return cb(err)
+      }
 
+      if (!item) {
+        return cb(null, false)
+      }
+
+      return cb(null, true)
+    })
+
+    return this
+  }
+
+  existsRole (name, cb) {
+    this.getRole(name, (err, item) => {
+      if (err) {
+        return cb(err)
+      }
+
+      if (!item) {
+        return cb(null, false)
+      }
+
+      return cb(null, true)
+    })
+
+    return this
+  }
+
+  existsPermission (action, resource, cb) {
+    this.getPermission(action, resource, (err, item) => {
+      if (err) {
+        return cb(err)
+      }
+
+      if (!item) {
+        return cb(null, false)
+      }
+
+      return cb(null, true)
+    })
+
+    return this
   }
 }
