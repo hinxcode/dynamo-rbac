@@ -1,20 +1,17 @@
 {
   "name": "dynamo-rbac",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "rbac with DynamoDB",
-  "author": {
-    "name": "Ben Huang",
-    "email": "b2765270@gmail.com",
-    "url": ""
-  },
+  "author": "hinxcode",
   "repository": {
     "type": "git",
-    "url": "git://github.com/"
+    "url": "git://github.com/hinxcode/dynamo-rbac.git"
   },
   "keywords": [
-    "RBAC"
+    "rbac",
+    "dynamo",
+    "database"
   ],
-  "private": false,
   "license": "MIT",
   "main": "./dist/index.js",
   "engines": {
@@ -42,8 +39,6 @@
     "babel-preset-stage-1": "^6.5.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.2",
-    "gulp-coveralls": "^0.1.4",
-    "gulp-jsdoc": "^0.1.5",
     "gulp-jsx-coverage": "^0.3.8",
     "gulp-util": "^3.0.7",
     "mocha": "^3.2.0",
