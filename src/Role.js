@@ -1,52 +1,22 @@
-import Base from './Base'
-import Permission from './Permission'
-
-export default class Role extends Base {
-  constructor (rbac, name, add, cb) {
-    if (typeof add === 'function') {
-      cb = add
-      add = true
+export const getRole = (userId, cb) => {
+  var params = {
+    TableName: 'Movies',
+    KeyConditionExpression: '#yr = :yyyy',
+    ExpressionAttributeNames: {
+      '#yr': 'year'
+    },
+    ExpressionAttributeValues: {
+      ':yyyy': {
+        N: '2003'
+      }
     }
+  }
 
-    if (!Permission.isValidName(name)) {
-      return cb(new Error('Role has no valid name'))
+  dynamoDB.query(params, (err, data) => {
+    if (err) {
+      cb(err)
+    } else {
+      cb(null, data.Items)
     }
-
-    super(rbac, name, add, cb)
-  }
-
-  grant (item, cb) {
-    this.rbac.grant(this, item, cb)
-    return this
-  }
-
-  revoke (item, cb) {
-    this.rbac.revoke(this, item, cb)
-    return this
-  }
-
-  can (action, resource, cb) {
-    this.rbac.can(this.name, action, resource, cb)
-    return this
-  }
-
-  canAny (permissions, cb) {
-    this.rbac.canAny(this.name, permissions, cb)
-    return this
-  }
-
-  canAll (permissions, cb) {
-    this.rbac.canAll(this.name, permissions, cb)
-    return this
-  }
-
-  hasRole (roleChildName, cb) {
-    this.rbac.hasRole(this.name, roleChildName, cb)
-    return this
-  }
-
-  getScope (cb) {
-    this.rbac.getScope(this.name, cb)
-    return this
-  }
+  })
 }

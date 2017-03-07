@@ -1,6 +1,5 @@
 import should from 'should'
 import AWS from 'aws-sdk'
-import Permission from '../Permission'
 
 AWS.config.update({
   region: 'us-west-2',

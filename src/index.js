@@ -1,8 +1,4 @@
-import RBAC from './RBAC'
-import Role from './Role'
-import Permission from './Permission'
-import Storage from './storages'
+import { connectDB } from './dynamo'
 
-export { Role, Permission, Storage }
-
-export default RBAC
+export { getRole } from './role'
+export default connectDB
