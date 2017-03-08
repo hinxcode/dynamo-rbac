@@ -1,6 +1,6 @@
 {
   "name": "dynamo-rbac",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Simple role-based access control use with dynamoDB",
   "author": "hinxcode",
   "repository": {
@@ -9,8 +9,7 @@
   },
   "keywords": [
     "rbac",
-    "dynamo",
-    "database"
+    "dynamodb"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
