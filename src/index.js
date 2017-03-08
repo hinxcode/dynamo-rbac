@@ -1,4 +1,2 @@
-import { connectDB } from './dynamo'
-
-export { getRole } from './role'
-export default connectDB
+export { connectDB } from './dynamo'
+export * from './role'

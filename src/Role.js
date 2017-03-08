@@ -1,18 +1,16 @@
-export const getRole = (userId, cb) => {
+export const getRole = (db, userId, cb) => {
   var params = {
-    TableName: 'Movies',
-    KeyConditionExpression: '#yr = :yyyy',
+    TableName: 'User',
+    KeyConditionExpression: '#id = :userid',
     ExpressionAttributeNames: {
-      '#yr': 'year'
+      '#id': 'id'
     },
     ExpressionAttributeValues: {
-      ':yyyy': {
-        N: '2003'
-      }
+      ':userid': { S: userId }
     }
   }
 
-  dynamoDB.query(params, (err, data) => {
+  db.query(params, (err, data) => {
     if (err) {
       cb(err)
     } else {
