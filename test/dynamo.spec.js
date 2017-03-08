@@ -1,7 +1,7 @@
 import should from 'should'
 import { connectDB } from '../src/dynamo'
 
-describe('table User', function () {
+describe.skip('table User', function () {
   let dynamodb
   const tableName = 'User'
 
