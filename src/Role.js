@@ -1,6 +1,6 @@
-export const getRole = (db, userId, cb) => {
+export const getRole = (db, tableName, userId, cb) => {
   var params = {
-    TableName: 'User',
+    TableName: tableName,
     KeyConditionExpression: '#id = :userid',
     ExpressionAttributeNames: {
       '#id': 'id'
