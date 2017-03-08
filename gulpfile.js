@@ -18,6 +18,10 @@ gulp.task('test', jsxCoverage.createTask({
       omitExt: false
     }
   },
+  coverage: {
+    reporters: ['text-summary', 'json', 'lcov'],
+    directory: 'coverage'
+  },
   mocha: {
     reporter: 'spec'
   }
