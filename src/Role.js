@@ -1,8 +1,9 @@
-import { getSchema } from './dynamo/schema'
+import { getInstance } from './dynamo/db'
+import { getTableName } from './dynamo/schema'
 
-export const updateRole = (db, userId, cb) => {
+export const updateRole = (userId, cb) => {
   var params = {
-    TableName: getSchema('role'),
+    TableName: getTableName('role'),
     KeyConditionExpression: '#id = :userid',
     ExpressionAttributeNames: {
       '#id': 'id'
@@ -12,7 +13,7 @@ export const updateRole = (db, userId, cb) => {
     }
   }
 
-  db.query(params, (err, data) => {
+  getInstance().query(params, (err, data) => {
     if (err) {
       cb(err)
     } else {
