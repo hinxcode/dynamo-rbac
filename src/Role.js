@@ -6,7 +6,7 @@ export const updateRole = (userId, cb) => {
     TableName: getTableName('role'),
     KeyConditionExpression: '#id = :userid',
     ExpressionAttributeNames: {
-      '#id': 'id'
+      '#id': 'Id'
     },
     ExpressionAttributeValues: {
       ':userid': { S: userId }

@@ -6,7 +6,7 @@ export const getUser = (userId, cb) => {
     TableName: getTableName('user'),
     KeyConditionExpression: '#id = :userid',
     ExpressionAttributeNames: {
-      '#id': 'id'
+      '#id': 'Id'
     },
     ExpressionAttributeValues: {
       ':userid': { S: userId }
@@ -22,23 +22,28 @@ export const getUser = (userId, cb) => {
   })
 }
 
-export const addUser = (userId, cb) => {
+export const addUser = (userId, role, name, cb) => {
   var params = {
     TableName: getTableName('user'),
-    KeyConditionExpression: '#id = :userid',
-    ExpressionAttributeNames: {
-      '#id': 'id'
+    Item: {
+      'Id': {
+        S: userId
+      },
+      'Role': {
+        N: role
+      },
+      'AccountName': {
+        S: name
+      }
     },
-    ExpressionAttributeValues: {
-      ':userid': { S: userId }
-    }
+    ReturnConsumedCapacity: 'TOTAL'
   }
 
-  getInstance().query(params, (err, data) => {
+  getInstance().putItem(params, (err, data) => {
     if (err) {
       cb(err)
     } else {
-      cb(null, data.Items)
+      cb(null, data)
     }
   })
 }
