@@ -2,14 +2,13 @@ import AWS from 'aws-sdk'
 
 let instance
 
-export const connectDB = (region = 'us-west-2', endpoint = 'http://localhost:8000') => {
+export const connectDB = config => {
   AWS.config.update({
-    region: region,
-    endpoint: endpoint
+    region: config.region || 'us-west-2',
+    endpoint: config.endpoint || 'http://localhost:8000'
   })
-
   AWS.config.apiVersions = {
-    dynamodb: '2012-08-10'
+    dynamodb: config.apiVersion || '2012-08-10'
   }
 
   instance = new AWS.DynamoDB()
