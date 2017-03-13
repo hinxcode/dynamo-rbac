@@ -6,5 +6,9 @@ export const connectDB = (region = 'us-west-2', endpoint = 'http://localhost:800
     endpoint: endpoint
   })
 
+  AWS.config.apiVersions = {
+    dynamodb: '2012-08-10'
+  }
+
   return new AWS.DynamoDB()
 }
