@@ -3,24 +3,28 @@ import { getTableName } from './schema'
 
 let instance
 
-const createTable = async (tableKey, params, cb) => {
-  let fuck = await getInstance().describeTable({TableName: getTableName(tableKey)}, (err, data) => {
-    // if (err) cb(err)
-    return err1
+const createTable = (tableKey, params, cb) => {
+  getInstance().describeTable({TableName: getTableName(tableKey)}, (err, data) => {
+    if (err) {
+      if (err.code !== 'ResourceNotFoundException') cb(err)
+
+      getInstance().createTable(params, function (err, data) {
+        if (err) cb(err)
+        else cb(null, data)
+      })
+    } else {
+      getInstance().deleteTable({TableName: getTableName(tableKey)}, (err, data) => {
+        if (err) {
+          cb(err)
+        } else {
+          getInstance().createTable(params, function (err, data) {
+            if (err) cb(err)
+            else cb(null, data)
+          })
+        }
+      })
+    }
   })
-  console.log('fuck', fuck)
-  //
-  // await getInstance().deleteTable({TableName: getTableName(tableKey)}, (err, data) => {
-  //   if (err) cb(err)
-  // })
-  //
-  // await getInstance().createTable(params, function (err, data) {
-  //   if (err) {
-  //     cb(err)
-  //   } else {
-  //     cb(null, data)
-  //   }
-  // })
 }
 
 export const connectDB = (config = {}) => {
@@ -45,12 +49,10 @@ export const createUserTable = cb => {
   const params = {
     TableName: getTableName('user'),
     KeySchema: [
-      { AttributeName: 'Id', KeyType: 'HASH' },
-      { AttributeName: 'Role', KeyType: 'RANGE' }
+      { AttributeName: 'Id', KeyType: 'HASH' }
     ],
     AttributeDefinitions: [
-      { AttributeName: 'Id', AttributeType: 'S' },
-      { AttributeName: 'Role', AttributeType: 'N' }
+      { AttributeName: 'Id', AttributeType: 'S' }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 10,
@@ -65,12 +67,10 @@ export const createRoleTable = cb => {
   const params = {
     TableName: getTableName('role'),
     KeySchema: [
-      { AttributeName: 'Id', KeyType: 'HASH' },
-      { AttributeName: 'Role', KeyType: 'RANGE' }
+      { AttributeName: 'Id', KeyType: 'HASH' }
     ],
     AttributeDefinitions: [
-      { AttributeName: 'Id', AttributeType: 'S' },
-      { AttributeName: 'Role', AttributeType: 'N' }
+      { AttributeName: 'Id', AttributeType: 'S' }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 10,
