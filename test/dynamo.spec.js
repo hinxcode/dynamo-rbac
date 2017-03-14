@@ -2,12 +2,17 @@
 import should from 'should'
 const RBAC = require('../src')
 
-describe.skip('dynamoDB', function () {
+describe('DynamoDB', function () {
   it('should be connected without error.', function () {
-    RBAC.connectDB()
+    RBAC.connectDB({
+      region: 'us-west-2',
+      endpoint: 'http://localhost:8000',
+      apiVersion: '2012-08-10'
+    })
+
     RBAC.setSchema({
-      user: 'User',
-      role: 'Role'
+      user: 'Users',
+      role: 'Roles'
     })
 
     const db = require('../src/dynamo/db')
